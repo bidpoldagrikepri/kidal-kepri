@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelaporan Partai Politik</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-image: url('latar.jpg'); 
+            background-size: cover;
+            background-attachment: fixed;
+            background-color: #add8e6;
+        }
+        .header-banner {
+            background: rgba(255,255,255,0.9); 
+            text-align: center; 
+            padding: 20px; 
+            border-bottom: 3px solid #004085;
+        }
+        .container-custom { 
+            max-width: 500px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 30px auto;
+        }
+        .btn-primary { background: #004085; border: none; width: 100%; font-weight: bold; padding: 12px; }
+        #pesan { display: none; margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="header-banner">
+    <img src="logo.png" style="width: 100px; height: auto;">
+    <h1 style="color: #004085; font-size: 22px; font-weight: bold; margin-top: 10px;">KLINIK DEMOKRASI DAN TATA KELOLA PARTAI POLITIK</h1>
+    <p style="color: #555; font-size: 14px;">BADAN KESATUAN BANGSA DAN POLITIK PROVINSI KEPULAUAN RIAU</p>
+</div>
+
+<div class="container-custom">
+    <h4 class="text-center mb-4">Formulir Pelaporan</h4>
+    <form id="formLaporan">
+        <div class="mb-3">
+            <label class="form-label fw-bold">Nama Partai Politik</label>
+            <input type="text" name="nama" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Bulan Pelaporan</label>
+            <select name="bulan" class="form-select">
+                <option>Januari</option><option>Februari</option><option>Maret</option>
+                <option>April</option><option>Mei</option><option>Juni</option>
+                <option>Juli</option><option>Agustus</option><option>September</option>
+                <option>Oktober</option><option>November</option><option>Desember</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Pilih File (PDF)</label>
+            <input type="file" id="filePDF" class="form-control" accept="application/pdf" required>
+        </div>
+        <button type="submit" id="tombolKirim" class="btn btn-primary">Kirim Laporan</button>
+    </form>
+    <div id="pesan"></div>
+</div>
+
+<script>
+    const URL_GOOGLE = 'https://script.google.com/macros/s/AKfycbwO9hJZi73kz-xuJY-g4302emJfHVb6oqNWmI8vOGKvmt-FzXGR2p0A_lleJkq610nE/exec';
+    
+    const form = document.getElementById('formLaporan');
+    const pesan = document.getElementById('pesan');
+    const tombol = document.getElementById('tombolKirim');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        pesan.style.display = 'block';
+        pesan.style.background = '#e9ecef';
+        pesan.innerHTML = "⏳ Sedang memproses file... mohon tunggu.";
+        tombol.disabled = true;
+
+        const file = document.getElementById('filePDF').files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const bytes = Array.from(new Uint8Array(e.target.result));
+            const payload = {
+                nama: form.nama.value,
+                bulan: form.bulan.value,
+                fileName: file.name,
+                mimeType: file.type,
+                data: bytes
+            };
+
+            fetch(URL_GOOGLE, { method: 'POST', body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(res => {
+                if(res.result === 'success') {
+                    pesan.style.background = '#d4edda';
+                    pesan.innerHTML = "<b>✅ Berhasil Terkirim!</b>";
+                    form.reset();
+                } else { throw new Error(); }
+            })
+            .catch(() => {
+                pesan.style.background = '#f8d7da';
+                pesan.innerHTML = "<b>❌ Gagal!</b> File mungkin terlalu besar atau koneksi terputus.";
+            })
+            .finally(() => { tombol.disabled = false; });
+        };
+        reader.readAsArrayBuffer(file);
+    });
+</script>
+</body>
+</html>
