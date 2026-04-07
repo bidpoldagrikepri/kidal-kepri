@@ -66,7 +66,7 @@
 </div>
 
 <script>
-    const URL_GOOGLE = 'https://script.google.com/macros/s/AKfycbyLRcLG80NBV8Pu1BXq9oFXrb3mlWB-aQ4bjrAXiRY/dev';
+    const URL_GOOGLE = 'https://script.google.com/macros/s/AKfycbxbnR4BmMOTEZkQLvAtT_QPQuQ2Cm07Ap3xKk5ySb_45getOy6--yuNurPEIlOIY2dx/exec';
     
     const form = document.getElementById('formLaporan');
     const pesan = document.getElementById('pesan');
@@ -74,16 +74,25 @@
 
     form.addEventListener('submit', e => {
         e.preventDefault();
+        e.stopImmediatePropagation();
+        
         pesan.style.display = 'block';
         pesan.style.background = '#e9ecef';
-        pesan.innerHTML = "⏳ Sedang memproses file... mohon tunggu.";
+        pesan.style.color = '#333';
+        pesan.innerHTML = "⏳ Sedang mengirim laporan... Mohon tunggu sebentar.";
         tombol.disabled = true;
 
         const file = document.getElementById('filePDF').files[0];
-        const reader = new FileReader();
+        
+        if (file.size > 10 * 1024 * 1024) { // Batas 10MB
+            alert("File terlalu besar. Maksimal 10MB.");
+            tombol.disabled = false;
+            return;
+        }
 
-        reader.onload = function(e) {
-            const bytes = Array.from(new Uint8Array(e.target.result));
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const bytes = Array.from(new Uint8Array(event.target.result));
             const payload = {
                 nama: form.nama.value,
                 bulan: form.bulan.value,
@@ -98,16 +107,23 @@
                 mode: 'no-cors'
             })
             .then(() => {
+                // Notifikasi Sukses
                 pesan.style.background = '#d4edda';
                 pesan.style.color = '#155724';
-                pesan.innerHTML = "<b>✅ Berhasil Terkirim!</b> Laporan sedang diproses di server.";
+                pesan.innerHTML = "<b>✅ Berhasil Terkirim!</b> Laporan telah masuk ke sistem.";
                 form.reset();
             })
             .catch(err => {
-                console.error(err);
+                console.error("Error:", err);
                 pesan.style.background = '#f8d7da';
-                pesan.innerHTML = "<b>❌ Gagal!</b> Terjadi kesalahan teknis.";
+                pesan.style.color = '#721c24';
+                pesan.innerHTML = "<b>❌ Gagal!</b> Terjadi kesalahan saat mengirim.";
             })
             .finally(() => {
                 tombol.disabled = false;
             });
+        };
+
+        reader.readAsArrayBuffer(file);
+    });
+</script>
