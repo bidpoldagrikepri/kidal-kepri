@@ -31,40 +31,57 @@
         .btn-primary { background: #004085; border: none; width: 100%; font-weight: bold; padding: 12px; }
         #pesan { display: none; margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center; }
     </style>
-    <style>
+   <style>
     .header-banner {
-        background: rgba(255, 255, 255, 0.5); 
-        padding: 15px 20px; 
+        background: rgba(255, 255, 255, 0.5); /* Efek transparan */
+        padding: 10px 15px; 
         margin-bottom: 20px;
         backdrop-filter: blur(5px); 
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Bayangan halus */
     }
 
     .header-container {
         display: flex;
-        justify-content: space-between; /* Membagi ruang ke kiri, tengah, dan kanan */
-        align-items: center; /* Menjaga semua elemen tetap sejajar di tengah secara vertikal */
-        max-width: 1200px;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1000px; /* Lebih ramping agar elegan */
         margin: 0 auto;
     }
 
-    /* Mengatur lebar sisi kiri dan kanan agar seimbang */
+    /* Pengaturan Sisi Kiri & Kanan */
     .header-side {
-        flex: 0 0 100px; /* Logo diberi ruang lebar 100px */
+        flex: 0 0 50px; /* Membatasi lebar area logo samping */
         display: flex;
         justify-content: center;
+        align-items: center;
     }
 
-    /* Mengatur teks di tengah agar fleksibel */
+    /* Pengaturan Tengah */
     .header-center {
         flex: 1;
         text-align: center;
         padding: 0 10px;
     }
 
+    /* Ukuran Logo Samping (Kiri & Kanan) */
+    .logo-kecil {
+        height: 40px; /* Ukuran kecil namun jelas */
+        width: auto;
+        object-fit: contain;
+    }
+
+    /* Ukuran Logo Tengah */
+    .logo-tengah-kecil {
+        height: 35px; /* Sedikit lebih kecil agar tidak menumpuk */
+        width: auto;
+        display: block;
+        margin: 0 auto 5px auto; /* Membuat logo di atas teks & berjarak sedikit */
+    }
+
+    /* Pengaturan Teks */
     .header-center h1 {
         color: #004085;
-        font-size: 18px; /* Ukuran teks judul */
+        font-size: 15px; /* Diperkecil agar proporsional dengan logo */
         margin: 0;
         font-weight: bold;
         line-height: 1.2;
@@ -72,27 +89,17 @@
 
     .header-center p {
         color: #333;
-        font-size: 12px;
-        margin: 5px 0 0 0;
+        font-size: 10px; /* Ukuran teks sub-judul */
+        margin: 3px 0 0 0;
+        letter-spacing: 0.5px;
     }
 
-    .logo-header {
-        max-width: 100%;
-        height: 70px; /* Atur tinggi logo sesuai selera kamu di sini */
-        object-fit: contain;
-    }
-
-    /* Tampilan HP agar tidak bertumpuk */
+    /* Tampilan HP (Responsive) */
     @media (max-width: 600px) {
-        .header-container {
-            flex-direction: column; /* Menumpuk ke bawah di layar kecil */
-        }
-        .header-side {
-            margin-bottom: 10px;
-        }
-        .header-center h1 {
-            font-size: 16px;
-        }
+        .logo-kecil { height: 35px; }
+        .logo-tengah-kecil { height: 30px; }
+        .header-center h1 { font-size: 13px; }
+        .header-center p { font-size: 9px; }
     }
 </style>
 </head>
@@ -101,18 +108,17 @@
 <div class="header-banner">
     <div class="header-container">
         <div class="header-side">
-            <img src="logo-kiri.jpg" class="logo-header" alt="Logo Kiri">
+            <img src="logo-kiri.png" class="logo-kecil" alt="Logo Kiri">
         </div>
         
-    <div class="header-center">
-    <img src="logo-tengah.jpg" class="logo-tengah" alt="Logo Tengah">
-    
-    <h1>KLINIK DEMOKRASI DAN TATA KELOLA PARTAI POLITIK</h1>
-    <p>BADAN KESATUAN BANGSA DAN POLITIK PROVINSI KEPULAUAN RIAU</p>
-</div>
+        <div class="header-center">
+            <img src="logo-tengah.png" class="logo-tengah-kecil" alt="Logo Tengah">
+            <h1>KLINIK DEMOKRASI DAN TATA KELOLA PARTAI POLITIK</h1>
+            <p>BADAN KESATUAN BANGSA DAN POLITIK PROVINSI KEPULAUAN RIAU</p>
+        </div>
         
         <div class="header-side">
-            <img src="logo-kanan.png" class="logo-header" alt="Logo Kanan">
+            <img src="logo-kanan.png" class="logo-kecil" alt="Logo Kanan">
         </div>
     </div>
 </div>
