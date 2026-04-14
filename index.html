@@ -3,229 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelaporan Partai Politik - Kesbangpol</title>
+    <title>Portal Pelaporan - Badan Kesbangpol</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { 
-            background-image: url('latar.jpg'); 
-            background-size: cover;
-            background-attachment: fixed;
-            background-color: #add8e6; /* Warna cadangan jika gambar gagal load */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary-color: #004085;
+            --accent-color: #ffc107;
+            --bg-light: #f4f7f9;
         }
 
-        /* --- Header Banner Section --- */
-        .header-banner {
-            background: rgba(255, 255, 255, 0.6); 
-            padding: 12px 15px; 
-            margin-bottom: 20px;
-            backdrop-filter: blur(8px); 
-            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* --- Header Modern --- */
+        .header-section {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             max-width: 1100px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .header-side {
-            flex: 0 0 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .header-center {
-            flex: 1;
-            text-align: center;
-            padding: 0 10px;
-        }
-
-        /* Ukuran Logo */
-        .logo-kecil {
-            height: 45px;
-            width: auto;
+        .logo-side {
+            width: 60px;
+            height: auto;
             object-fit: contain;
         }
 
-        .logo-tengah-kecil {
-            height: 35px;
-            width: auto;
-            display: block;
-            margin: 0 auto 5px auto;
+        .header-content {
+            text-align: center;
+            flex: 1;
         }
 
-        /* Teks Judul */
-        .header-center h1 {
-            color: #004085;
-            font-size: 16px;
+        .header-content h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
             margin: 0;
-            font-weight: bold;
-            line-height: 1.2;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .header-center p {
-            color: #222;
-            font-size: 11px;
-            margin: 3px 0 0 0;
+        .header-content p {
+            font-size: 0.75rem;
+            color: #444;
+            margin: 4px 0 0 0;
+            font-weight: 500;
+        }
+
+        .logo-tengah {
+            height: 35px;
+            margin-bottom: 8px;
+        }
+
+        /* --- Formulir --- */
+        .main-container {
+            padding: 40px 20px;
+        }
+
+        .card-upload {
+            max-width: 550px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .form-label {
             font-weight: 600;
-            letter-spacing: 0.3px;
+            color: #333;
+            margin-bottom: 10px;
         }
 
-        /* --- Form Section --- */
-        .container-custom { 
-            max-width: 500px; 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            margin: 20px auto 50px auto;
-        }
-
-        .btn-primary { 
-            background: #004085; 
-            border: none; 
-            width: 100%; 
-            font-weight: bold; 
-            padding: 12px;
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #eee;
             transition: 0.3s;
         }
-
-        .btn-primary:hover {
-            background: #002d5e;
-            transform: translateY(-1px);
-        }
-
-        #pesan { 
-            display: none; 
-            margin-top: 15px; 
-            padding: 12px; 
-            border-radius: 8px; 
-            text-align: center; 
-            font-size: 14px;
-        }
-
-        /* Responsive Mobile */
-        @media (max-width: 600px) {
-            .logo-kecil { height: 35px; }
-            .logo-tengah-kecil { height: 30px; }
-            .header-center h1 { font-size: 13px; }
-            .header-center p { font-size: 9px; }
-            .header-side { flex: 0 0 45px; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="header-banner">
-    <div class="header-container">
-        <div class="header-side">
-            <img src="logo-kiri.png" class="logo-kecil" alt="Logo Kiri">
-        </div>
-        
-        <div class="header-center">
-            <img src="logo-tengah.png" class="logo-tengah-kecil" alt="Logo Tengah">
-            <h1>Klinik Demokrasi dan Tata Kelola Partai Politik</h1>
-            <p>BADAN KESATUAN BANGSA DAN POLITIK PROVINSI KEPULAUAN RIAU</p>
-        </div>
-        
-        <div class="header-side">
-            <img src="logo-kanan.png" class="logo-kecil" alt="Logo Kanan">
-        </div>
-    </div>
-</div>
-
-<div class="container-custom">
-    <h4 class="text-center mb-4" style="color: #333; font-weight: bold;">Formulir Pelaporan</h4>
-    <form id="formLaporan">
-        <div class="mb-3">
-            <label class="form-label fw-bold">Nama Partai Politik</label>
-            <input type="text" name="nama" class="form-control" placeholder="Masukkan nama partai..." required>
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold">Tahun Anggaran</label>
-            <select name="tahun" class="form-select">
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
-        </div>
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold">Pilih File Laporan (PDF)</label>
-            <input type="file" id="filePDF" class="form-control" accept="application/pdf" required>
-            <div class="form-text">Maksimal ukuran file: 10MB</div>
-        </div>
-        
-        <button type="submit" id="tombolKirim" class="btn btn-primary">KIRIM LAPORAN</button>
-    </form>
-    
-    <div id="pesan"></div>
-</div>
-
-<script>
-    // URL Web App Google Script yang sudah di-deploy sebagai 'Anyone'
-    const URL_GOOGLE = 'https://script.google.com/macros/s/AKfycbxbnR4BmMOTEZkQLvAtT_QPQuQ2Cm07Ap3xKk5ySb_45getOy6--yuNurPEIlOIY2dx/exec';
-    
-    const form = document.getElementById('formLaporan');
-    const pesan = document.getElementById('pesan');
-    const tombol = document.getElementById('tombolKirim');
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        
-        // Persiapan Tampilan Loading
-        pesan.style.display = 'block';
-        pesan.style.background = '#f8f9fa';
-        pesan.style.color = '#333';
-        pesan.style.border = '1px solid #ddd';
-        pesan.innerHTML = "⏳ <b>Sedang memproses...</b><br>Mohon jangan tutup halaman ini.";
-        tombol.disabled = true;
-
-        const file = document.getElementById('filePDF').files[0];
-        
-        // Cek Ukuran File
-        if (file.size > 10 * 1024 * 1024) { 
-            alert("File terlalu besar! Maksimal adalah 10MB.");
-            tombol.disabled = false;
-            pesan.style.display = 'none';
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const bytes = Array.from(new Uint8Array(event.target.result));
-            const payload = {
-                nama: form.nama.value,
-                tahun: form.tahun.value, // Menggunakan tahun sesuai form
-                fileName: file.name,
-                mimeType: file.type,
-                data: bytes
-            };
-
-            fetch(URL_GOOGLE, { 
-                method: 'POST', 
-                body: JSON.stringify(payload),
-                mode: 'no-cors'
-            })
-            .then(() => {
-                // Notifikasi Sukses
-                pesan.style.background = '#d4edda';
-                pesan.style.color = '#155724';
-                pesan.style.border = '1px solid #c3e6cb';
-                pesan.innerHTML = "<b>✅ Berhasil!</b><br>Laporan telah terkirim dan tersimpan.";
-                form.reset();
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                pesan.style.background = '#f8d7da';
-                pesan.style.color = '#721c24';
-                pesan.style.border = '1px solid #f5c6cb';
-                pesan.innerHTML = "<b>❌ Gagal!</b><br>Terjadi
