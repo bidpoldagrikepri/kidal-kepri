@@ -203,7 +203,7 @@
     </div>
 
     <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSStyvq0ddeaDNDQALTkh0qcSaOzCLlJvAkp0_48UGmPMShdVj1YI3k8S86ZxsbbkF/exec'; // <== GANTI DENGAN URL DEPLOY ANDA
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzfJr1mscyk2fLNpFPHcrQRwR3pbd8aoIY6sHHcRoiu55FhlfcR_rRb1lGZlYsFMqXU/exec'; // <== GANTI DENGAN URL DEPLOY ANDA
     const form = document.getElementById('uploadForm');
     const status = document.getElementById('statusMessage');
     const btn = document.getElementById('btnSubmit');
@@ -229,7 +229,7 @@
             
             // Progress Update
             const percent = Math.round(((i + 1) / totalParts) * 100);
-            status.innerHTML = `⏳ Mengunggah: ${percent}% (Bagian ${i+1}/${totalParts})`;
+            status.innerHTML = `⏳ Mengunggah`;
 
             const base64Data = await convertToBase64(chunk);
             
